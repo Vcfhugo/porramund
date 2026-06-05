@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<script>
+  (function () {
+    var swallow = function (e) {
+      var m = (e && (e.message || (e.reason && e.reason.message))) || '';
+      if (typeof m === 'string' && m.indexOf('ResizeObserver') !== -1) {
+        e.stopImmediatePropagation && e.stopImmediatePropagation();
+        e.preventDefault && e.preventDefault();
+        return false;
+      }
+    };
+    window.addEventListener('error', swallow, true);
+    var _err = console.error;
+    console.error = function () {
+      var a = arguments[0];
+      if (typeof a === 'string' && a.indexOf('ResizeObserver') !== -1) return;
+      return _err.apply(console, arguments);
+    };
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#0D0A02" />
+
+<title>Porra Mundial 2026 — La porra del Mundial</title>
+<meta name="description" content="Pronostica los 104 partidos del Mundial 2026, monta tu liga con amigos y pelea por el bote." />
+
+<!-- OG / WhatsApp / Twitter -->
+<meta property="og:type"        content="website" />
+<meta property="og:title"       content="Porra Mundial 2026" />
+<meta property="og:description" content="La porra del Mundial. 104 partidos. 1 campeón. ¿Quién eres tú?" />
+<meta property="og:image"       content="https://porra.hugo.carreres.com/og-image.png" />
+<meta property="og:url"         content="https://porra.hugo.carreres.com/web" />
+<meta name="twitter:card"       content="summary_large_image" />
+
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="web.css" />
+</head>
+<body>
+  <div id="web-root"></div>
+  <!-- Mobile switcher — hidden by JS once app loads -->
+  <a id="mobile-link" href="/?mobile=1"
+    style="display:none;position:fixed;bottom:20px;right:20px;z-index:9999;
+           background:#1a1a1a;color:#FDD301;border:1px solid rgba(253,211,1,.3);
+           border-radius:999px;padding:8px 16px;font-size:12px;font-weight:700;
+           font-family:system-ui,sans-serif;text-decoration:none;letter-spacing:.04em">
+    📱 Vista móvil
+  </a>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <!-- SUPABASE — configura supabase-client.js con tu URL y ANON KEY antes de descomentar -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-client.js?v=20260605d"></script>
+
+  <script src="data.js?v=20260605d"></script>
+  <script type="text/babel" src="ui.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-home.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-predict.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-bracket.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-rank.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-profile.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-draft.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-rules.jsx?v=20260605d"></script>
+  <script type="text/babel" src="onboarding.jsx?v=20260605d"></script>
+  <script type="text/babel" src="auth.jsx?v=20260605d"></script>
+  <script type="text/babel" src="tweaks-panel.jsx?v=20260605d"></script>
+  <script type="text/babel" src="web-app.jsx?v=20260605d"></script>
+</body>
+</html>

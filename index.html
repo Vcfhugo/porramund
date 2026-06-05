@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<script>
+  (function () {
+    var swallow = function (e) {
+      var m = (e && (e.message || (e.reason && e.reason.message))) || '';
+      if (typeof m === 'string' && m.indexOf('ResizeObserver') !== -1) {
+        e.stopImmediatePropagation && e.stopImmediatePropagation();
+        e.preventDefault && e.preventDefault();
+        return false;
+      }
+    };
+    window.addEventListener('error', swallow, true);
+    var _err = console.error;
+    console.error = function () {
+      var a = arguments[0];
+      if (typeof a === 'string' && a.indexOf('ResizeObserver') !== -1) return;
+      return _err.apply(console, arguments);
+    };
+  })();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0D0A02" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Porra Mundial" />
+
+<title>Porra Mundial 2026 — La porra del Mundial</title>
+<meta name="description" content="Pronostica los 104 partidos del Mundial 2026, monta tu liga con amigos y pelea por el bote. Que gane el más profeta." />
+
+<!-- OG / WhatsApp / Twitter -->
+<meta property="og:type"        content="website" />
+<meta property="og:title"       content="Porra Mundial 2026" />
+<meta property="og:description" content="La porra del Mundial. 104 partidos. 1 campeón. ¿Quién eres tú?" />
+<meta property="og:image"       content="https://porra.hugo.carreres.com/og-image.png" />
+<meta property="og:url"         content="https://porra.hugo.carreres.com" />
+<meta name="twitter:card"       content="summary_large_image" />
+<meta name="twitter:title"      content="Porra Mundial 2026" />
+<meta name="twitter:description" content="La porra del Mundial. 104 partidos. 1 campeón." />
+<meta name="twitter:image"      content="https://porra.hugo.carreres.com/og-image.png" />
+
+<link rel="manifest" href="manifest.json" />
+<link rel="icon" href="icon.svg" type="image/svg+xml" />
+<link rel="icon" href="icon-192.png" type="image/png" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+
+<link rel="stylesheet" href="styles.css" />
+<style>
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: #0D0A02;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; font-family: 'Archivo', system-ui, sans-serif;
+  }
+  #stage { position: relative; }
+  #device-wrap { transform-origin: center center; }
+  .credit {
+    position: fixed; left: 50%; bottom: 14px; transform: translateX(-50%);
+    color: #3a3020; font-size: 11px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; font-family: 'Space Mono', monospace;
+    white-space: nowrap;
+  }
+
+  /* Real mobile: fill viewport natively, no device mockup */
+  @media (max-width: 768px) and (pointer: coarse) {
+    body { display: block; background: #000; }
+    #stage, #device-wrap { position: fixed; inset: 0; width: 100%; height: 100%; }
+    .credit { display: none; }
+  }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <div id="device-wrap">
+      <div id="root"></div>
+    </div>
+  </div>
+  <div class="credit">Porra Mundial 2026 · USA · CAN · MEX</div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+  <!-- SUPABASE — configura supabase-client.js con tu URL y ANON KEY antes de descomentar -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="supabase-client.js?v=20260605d"></script>
+
+  <script src="data.js?v=20260605d"></script>
+  <script type="text/babel" src="ios-frame.jsx?v=20260605d"></script>
+  <script type="text/babel" src="ui.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-home.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-predict.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-bracket.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-rank.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-profile.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-draft.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-admin.jsx?v=20260605d"></script>
+  <script type="text/babel" src="onboarding.jsx?v=20260605d"></script>
+  <script type="text/babel" src="screens-rules.jsx?v=20260605d"></script>
+  <script type="text/babel" src="auth.jsx?v=20260605d"></script>
+  <script type="text/babel" src="tweaks-panel.jsx?v=20260605d"></script>
+  <script type="text/babel" src="app.jsx?v=20260605d"></script>
+
+  <script>
+    // Auto-redirect desktop users to web view
+    if (window.innerWidth >= 1024 && !window.location.search.includes('mobile')) {
+      window.location.replace('/web');
+    }
+
+    // Detect real touch device — skip the iOS mockup frame
+    window.IS_REAL_MOBILE = window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
+
+    if (!window.IS_REAL_MOBILE) {
+      function fitDevice() {
+        const W = 402, H = 874, margin = 40;
+        const sx = (window.innerWidth  - margin) / W;
+        const sy = (window.innerHeight - margin) / H;
+        const s  = Math.min(sx, sy, 1.15);
+        const el = document.getElementById('device-wrap');
+        if (el) el.style.transform = 'scale(' + s + ')';
+      }
+      window.addEventListener('resize', fitDevice);
+      fitDevice();
+      const _fit = setInterval(fitDevice, 400);
+      setTimeout(() => clearInterval(_fit), 3000);
+    }
+  </script>
+</body>
+</html>

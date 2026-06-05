@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- Ruido de textura sutil -->
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply" result="blend"/>
+      <feComposite in="blend" in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+
+  <!-- Fondo cálido oscuro -->
+  <rect width="1200" height="630" fill="#0D0A02"/>
+
+  <!-- Línea dorada lateral izquierda -->
+  <rect x="0" y="0" width="8" height="630" fill="#FDD301"/>
+
+  <!-- Balón de fondo — decorativo, muy sutil -->
+  <circle cx="980" cy="200" r="320" fill="none" stroke="#FDD301" stroke-width="1.5" opacity="0.08"/>
+  <circle cx="980" cy="200" r="220" fill="none" stroke="#FDD301" stroke-width="1" opacity="0.06"/>
+
+  <!-- Label pequeño arriba -->
+  <text x="64" y="90"
+    font-family="'Arial Narrow', Arial, sans-serif"
+    font-weight="700" font-size="20" letter-spacing="6"
+    fill="#8A7B5A" text-anchor="start">⚽ USA · CANADÁ · MÉXICO 2026</text>
+
+  <!-- Título principal — Bebas Neue style (condensed bold) -->
+  <text x="60" y="260"
+    font-family="'Arial Narrow', 'Haettenschweiler', 'Franklin Gothic Medium', Impact, Arial, sans-serif"
+    font-weight="900" font-size="196" letter-spacing="6"
+    fill="#FDD301" text-anchor="start">LA PORRA</text>
+
+  <text x="60" y="440"
+    font-family="'Arial Narrow', 'Haettenschweiler', 'Franklin Gothic Medium', Impact, Arial, sans-serif"
+    font-weight="900" font-size="196" letter-spacing="6"
+    fill="#EDE5C8" text-anchor="start">DEL <tspan fill="#FDD301">MUNDIAL</tspan></text>
+
+  <!-- Subtítulo -->
+  <text x="64" y="516"
+    font-family="'Arial Narrow', Arial, sans-serif"
+    font-weight="700" font-size="22" letter-spacing="3"
+    fill="#8A7B5A" text-anchor="start">Pronostica · Compite · Gana · Cierre 11 jun 17:00 h</text>
+
+  <!-- Línea decorativa inferior -->
+  <rect x="60" y="558" width="180" height="4" rx="2" fill="#FDD301" opacity="0.6"/>
+</svg>

@@ -1,0 +1,725 @@
+/* ===========================================================
+   WEB LAYOUT — Porra Mundial 2026
+   Desktop-first · Sidebar · Main · Rail
+   =========================================================== */
+
+/* ---- Base color for web (mobile uses .app which sets color:var(--text)) ---- */
+.web-root {
+  color: var(--text);
+}
+
+/* ---- Easing system (Emil design-eng) ---- */
+:root {
+  --ease-out:    cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* ---- Page reset for web ---- */
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  overflow: hidden; /* grid owns the scroll */
+}
+
+/* ---- Grid shell ---- */
+.web-root {
+  display: grid;
+  grid-template-columns: 252px 1fr 296px;
+  grid-template-rows: 100vh;
+  min-height: 100vh;
+  background: var(--ink);
+}
+
+@media (max-width: 1200px) {
+  .web-root {
+    grid-template-columns: 220px 1fr 260px;
+  }
+}
+@media (max-width: 960px) {
+  .web-root {
+    grid-template-columns: 200px 1fr;
+  }
+  .web-rail { display: none; }
+}
+@media (max-width: 640px) {
+  .web-root {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+  .web-sidebar { display: none; }
+  .web-mobile-bar { display: flex; }
+  .web-main { padding-bottom: 80px; }
+  .web-main-inner { padding: 24px 18px 20px; }
+}
+
+/* ===========================================================
+   SIDEBAR
+   =========================================================== */
+.web-sidebar {
+  position: relative;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  background: var(--ink-2);
+}
+.web-sidebar::-webkit-scrollbar { display: none; }
+
+/* Brand mark */
+.web-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 26px 20px 22px;
+  flex-shrink: 0;
+}
+.web-brand-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-ink);
+  flex-shrink: 0;
+}
+.web-brand-text .name {
+  font-family: var(--font-poster);
+  font-size: 20px;
+  letter-spacing: .05em;
+  line-height: 1;
+  color: var(--text);
+}
+.web-brand-text .sub {
+  font-size: 10px;
+  color: var(--muted);
+  font-weight: 700;
+  margin-top: 3px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* League card in sidebar */
+.web-sidebar-league {
+  margin: 0 14px 20px;
+  padding: 13px 14px;
+  background: var(--surface-2);
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.web-sidebar-league:hover {
+  background: var(--surface-3);
+}
+.web-sidebar-league .lg-name {
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.web-sidebar-league .lg-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.web-sidebar-league .lg-stats {
+  display: flex;
+  gap: 0;
+}
+.web-sidebar-league .lg-stat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.web-sidebar-league .lg-stat + .lg-stat {
+  border-left: 1px solid var(--line);
+  padding-left: 10px;
+  margin-left: 10px;
+}
+.web-sidebar-league .lg-val {
+  font-family: var(--font-poster);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--lime);
+  letter-spacing: .04em;
+}
+.web-sidebar-league .lg-lbl {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+/* Navigation */
+.web-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 10px;
+}
+
+.web-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--muted);
+  width: 100%;
+  text-align: left;
+  letter-spacing: -.01em;
+  transition: background 150ms ease, color 120ms ease;
+  position: relative;
+  overflow: hidden;
+}
+.web-nav-item .nav-ic {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: var(--surface);
+  transition: background 150ms ease, color 150ms ease;
+}
+.web-nav-item .nav-badge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: 'Brasil2014Numeros', monospace;
+  color: var(--muted-2);
+  background: var(--surface-3);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .web-nav-item:hover {
+    background: var(--surface);
+    color: var(--text);
+  }
+  .web-nav-item:hover .nav-ic {
+    background: var(--surface-3);
+  }
+}
+.web-nav-item:active {
+  transform: scale(0.98);
+  transition: transform 80ms var(--ease-out);
+}
+.web-nav-item.active {
+  background: rgba(var(--lime-rgb), .10);
+  color: var(--lime);
+}
+.web-nav-item.active .nav-ic {
+  background: rgba(var(--lime-rgb), .20);
+  color: var(--lime);
+}
+.web-nav-item.active .nav-badge {
+  background: rgba(var(--lime-rgb), .20);
+  color: var(--lime);
+}
+
+/* Sidebar footer */
+.web-sidebar-footer {
+  padding: 16px 14px 24px;
+  flex-shrink: 0;
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
+}
+.web-sidebar-rules-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border-radius: 11px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  width: 100%;
+  text-align: left;
+  transition: background 150ms ease, color 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .web-sidebar-rules-btn:hover {
+    background: var(--surface);
+    color: var(--text);
+  }
+}
+.web-price-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px 0;
+  font-size: 11px;
+  color: var(--muted-2);
+  font-weight: 600;
+}
+
+/* ===========================================================
+   MAIN CONTENT AREA
+   =========================================================== */
+.web-main {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-3) transparent;
+}
+.web-main::-webkit-scrollbar {
+  width: 6px;
+}
+.web-main::-webkit-scrollbar-track {
+  background: transparent;
+}
+.web-main::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 3px;
+}
+
+.web-main-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 36px 32px 60px;
+}
+
+/* Web screen header — replaces .appbar + .safe-top */
+.web-screen-header {
+  margin-bottom: 28px;
+}
+.web-screen-header .breadcrumb {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+.web-screen-header h1 {
+  font-family: var(--font-poster);
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  line-height: 1;
+  margin: 0;
+  color: var(--text);
+}
+.web-screen-header .head-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ===========================================================
+   RIGHT RAIL
+   =========================================================== */
+.web-rail {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  border-left: 1px solid var(--line);
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--ink-2);
+}
+.web-rail::-webkit-scrollbar { display: none; }
+
+.rail-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.rail-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+/* Countdown widget in rail */
+.rail-deadline {
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  border-radius: 16px;
+  padding: 14px 16px;
+  overflow: hidden;
+  position: relative;
+}
+.rail-deadline .dl-glow { display: none; }
+.rail-deadline .dl-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  margin-bottom: 6px;
+}
+.rail-deadline .dl-date {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: -.02em;
+  margin-bottom: 10px;
+}
+.rail-deadline .dl-counter {
+  display: flex;
+  gap: 6px;
+}
+.rail-deadline .dl-unit {
+  flex: 1;
+  background: var(--surface-2);
+  border-radius: 9px;
+  padding: 8px 0;
+  text-align: center;
+}
+.rail-deadline .dl-num {
+  font-family: var(--font-score);
+  font-size: 30px;
+  font-weight: 400;
+  color: var(--lime);
+  display: block;
+  line-height: 1;
+  letter-spacing: .04em;
+}
+.rail-deadline.urgent .dl-num {
+  color: var(--coral);
+}
+.rail-deadline .dl-unit-lbl {
+  font-size: 9px;
+  font-weight: 800;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  display: block;
+  margin-top: 3px;
+}
+
+/* Rail team chips */
+.rail-team-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--surface-2);
+  border-radius: 11px;
+  border: 1px solid var(--line);
+  transition: background 120ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .rail-team-chip:hover {
+    background: var(--surface-3);
+  }
+}
+
+/* Rail leaderboard */
+.rail-lb-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 11px;
+  transition: background 120ms ease;
+}
+.rail-lb-row.me {
+  background: rgba(var(--lime-rgb), .08);
+  border: 1px solid rgba(var(--lime-rgb), .2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .rail-lb-row:not(.me):hover {
+    background: var(--surface);
+  }
+}
+
+/* ===========================================================
+   ANIMATION SYSTEM (Emil design-eng principles)
+   =========================================================== */
+
+/* Custom easing applied globally to interactive elements */
+.btn {
+  transition: transform 120ms var(--ease-out), filter 150ms ease, background 150ms ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-accent:hover  { filter: brightness(1.07); }
+  .btn-ghost:hover   { background: var(--surface-3); }
+  .btn-coral:hover   { filter: brightness(1.08); }
+  .btn-orange:hover  { filter: brightness(1.08); }
+}
+.btn:active {
+  transform: scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* Team pick cards — stagger entry + hover */
+.team-pick {
+  transition: background 120ms ease, border-color 120ms ease, transform 120ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .team-pick:not(.selected):not(.maxed):hover {
+    background: var(--surface-3);
+    border-color: var(--line-2);
+    transform: translateX(3px);
+  }
+}
+.team-pick:active:not(.maxed) {
+  transform: scale(0.98) translateX(2px);
+  transition-duration: 80ms;
+}
+
+/* Stagger animation for group team lists */
+@keyframes web-slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.team-picks-list .team-pick {
+  opacity: 0;
+  animation: web-slide-in 220ms var(--ease-out) forwards;
+}
+.team-picks-list .team-pick:nth-child(1) { animation-delay:   0ms; }
+.team-picks-list .team-pick:nth-child(2) { animation-delay:  45ms; }
+.team-picks-list .team-pick:nth-child(3) { animation-delay:  90ms; }
+.team-picks-list .team-pick:nth-child(4) { animation-delay: 135ms; }
+.team-picks-list .team-pick:nth-child(5) { animation-delay: 180ms; }
+.team-picks-list .team-pick:nth-child(6) { animation-delay: 225ms; }
+
+/* Nav item transitions */
+.web-nav-item {
+  transition: background 150ms ease, color 120ms ease, transform 80ms var(--ease-out);
+}
+
+/* Card hover */
+@media (hover: hover) and (pointer: fine) {
+  .card {
+    transition: border-color 150ms ease, background 150ms ease;
+  }
+  .card:not(.no-hover):hover {
+    border-color: var(--line-2);
+  }
+}
+
+/* Player pick rows */
+.player-pick {
+  transition: background 120ms ease, border-color 120ms ease, transform 80ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  .player-pick:not(.selected):hover {
+    background: var(--surface-2);
+    transform: translateX(2px);
+  }
+}
+
+/* Chip hover */
+@media (hover: hover) and (pointer: fine) {
+  .chip:not(.on):hover {
+    background: var(--surface-2);
+    border-color: var(--muted-2);
+    color: var(--text);
+  }
+}
+
+/* Leaderboard row hover */
+@media (hover: hover) and (pointer: fine) {
+  .lb-row:not(.me):hover {
+    background: var(--surface);
+  }
+}
+
+/* @starting-style — entry animation for cards (progressive enhancement) */
+@supports (animation-timeline: scroll()) {
+  /* Noop — just detecting modern CSS support for future */
+}
+
+/* Screen fade-in on tab change */
+@keyframes screen-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.web-screen-enter {
+  animation: screen-enter 250ms var(--ease-out) forwards;
+}
+
+/* Subtab bar — web scale */
+.web-main-inner .subtab-bar {
+  max-width: 420px;
+}
+
+/* Progress bar animated fill */
+.meter > i {
+  transition: width 500ms var(--ease-out);
+}
+
+/* Live blink — more prominent on web */
+.tag-live {
+  animation: live-pulse 2s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .75; }
+}
+
+/* Countdown numbers — flip hint */
+.dl-num {
+  transition: opacity 200ms ease, transform 200ms var(--ease-out);
+}
+
+/* ===========================================================
+   WEB HOME SCREEN — specific overrides
+   =========================================================== */
+
+/* Remove mobile-only elements */
+.web-main-inner .safe-top { display: none; }
+.web-main-inner .appbar   { display: none; }
+
+/* Prevent nested scroll — let web-main own the scrolling */
+.web-main-inner .scroll {
+  overflow: visible;
+  flex: none;
+  height: auto;
+}
+.web-main-inner .scroll.no-sb {
+  overflow: visible;
+}
+
+/* Web deadline bar */
+.web-deadline-hero {
+  background: rgba(var(--orange-rgb),.08);
+  border: 1px solid rgba(var(--orange-rgb),.22);
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.web-deadline-hero .dh-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  background: rgba(var(--orange-rgb),.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--orange);
+  flex-shrink: 0;
+}
+.web-deadline-hero .dh-text {
+  flex: 1;
+}
+.web-deadline-hero .dh-title {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.web-deadline-hero .dh-sub {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 600;
+}
+.web-deadline-hero .dh-cta {
+  flex-shrink: 0;
+}
+
+/* Web groups grid — 2 columns on desktop */
+.web-groups-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 700px) {
+  .web-groups-grid { grid-template-columns: 1fr; }
+}
+
+/* Web leaderboard — more spacious */
+.web-lb-table {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.web-lb-row {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 12px 14px;
+  border-radius: 13px;
+  transition: background 120ms ease;
+}
+.web-lb-row.me {
+  background: rgba(var(--lime-rgb), .08);
+  border: 1px solid rgba(var(--lime-rgb), .2);
+}
+@media (hover: hover) and (pointer: fine) {
+  .web-lb-row:not(.me):hover {
+    background: var(--surface);
+  }
+}
+
+/* ===========================================================
+   WEB MOBILE BOTTOM BAR (≤640px)
+   =========================================================== */
+.web-mobile-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  background: var(--ink-2);
+  border-top: 1px solid var(--line-2);
+  padding: 10px 0 20px;
+}
+
+/* ===========================================================
+   REDUCED MOTION
+   =========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .team-picks-list .team-pick,
+  .web-screen-enter {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .btn,
+  .web-nav-item,
+  .team-pick,
+  .player-pick {
+    transition: none;
+  }
+}

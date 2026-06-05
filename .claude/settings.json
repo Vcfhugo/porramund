@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_screenshot",
+      "mcp__Claude_Preview__preview_console_logs",
+      "mcp__Claude_Preview__preview_list",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_console_messages",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" *)"
+    ]
+  }
+}

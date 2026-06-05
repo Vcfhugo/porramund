@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Fondo cálido oscuro -->
+  <rect width="512" height="512" rx="112" fill="#0D0A02"/>
+  <!-- Balón de fútbol simplificado en oro -->
+  <circle cx="256" cy="224" r="110" fill="none" stroke="#FDD301" stroke-width="18"/>
+  <!-- Pentágono central -->
+  <polygon points="256,150 304,184 285,238 227,238 208,184" fill="#FDD301"/>
+  <!-- Pétalos del balón -->
+  <line x1="256" y1="114" x2="256" y2="150" stroke="#FDD301" stroke-width="14" stroke-linecap="round"/>
+  <line x1="350" y1="173" x2="322" y2="193" stroke="#FDD301" stroke-width="14" stroke-linecap="round"/>
+  <line x1="313" y1="312" x2="293" y2="286" stroke="#FDD301" stroke-width="14" stroke-linecap="round"/>
+  <line x1="199" y1="312" x2="219" y2="286" stroke="#FDD301" stroke-width="14" stroke-linecap="round"/>
+  <line x1="162" y1="173" x2="190" y2="193" stroke="#FDD301" stroke-width="14" stroke-linecap="round"/>
+  <!-- Texto "2026" abajo -->
+  <text x="256" y="390" text-anchor="middle"
+    font-family="'Arial Narrow', Arial, sans-serif"
+    font-weight="900" font-size="72" letter-spacing="4"
+    fill="#FDD301">2026</text>
+</svg>

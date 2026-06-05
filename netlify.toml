@@ -1,0 +1,59 @@
+# ============================================================
+# Porra Mundial 2026 — Netlify config
+# ============================================================
+
+[build]
+  publish = "."
+
+# ── Redirects ────────────────────────────────────────────────
+# OAuth / magic-link callback
+[[redirects]]
+  from = "/auth/callback"
+  to   = "/index.html"
+  status = 200
+
+# Web desktop alias
+[[redirects]]
+  from = "/web"
+  to   = "/web.html"
+  status = 200
+
+# SPA catch-all
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
+
+# ── Headers ──────────────────────────────────────────────────
+[[headers]]
+  for = "/*.jsx"
+  [headers.values]
+    Content-Type  = "text/javascript; charset=utf-8"
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options           = "DENY"
+    X-Content-Type-Options    = "nosniff"
+    Referrer-Policy           = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Permissions-Policy        = "camera=(), microphone=(), geolocation=(), payment=()"
+    # unsafe-inline + unsafe-eval son necesarios porque Babel compila JSX en el navegador.
+    # Para eliminarlos en el futuro: pre-compilar con Vite/esbuild.
+    Content-Security-Policy   = "default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://*.supabase.co wss://*.supabase.co; img-src 'self' data: https:; font-src 'self' https://fonts.gstatic.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'"
