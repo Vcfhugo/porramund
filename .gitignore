@@ -3,6 +3,7 @@ node_modules/
 .env
 .env.local
 .env.*.local
-supabase-client.js
+# supabase-client.js — se commitea: la anon key es pública (la seguridad la dan las RLS).
+#                      Necesario porque el deploy estático no tiene paso de build.
 .netlify/state.json
 supabase/.temp/

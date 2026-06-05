@@ -1,0 +1,11 @@
+# Cloudflare Pages — redirects (equivalente al netlify.toml)
+# El primer match gana. Los archivos estáticos existentes se sirven antes que estas reglas.
+
+# Callback de login (magic link / OAuth) → carga la app, que detecta la sesión en la URL
+/auth/callback   /index.html   200
+
+# Alias de la vista de escritorio
+/web             /web.html     200
+
+# SPA catch-all → todo lo demás carga la app móvil
+/*               /index.html   200
