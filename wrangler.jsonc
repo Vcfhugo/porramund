@@ -1,0 +1,11 @@
+{
+  // Cloudflare Workers — sirve la web estática del repo (sin código de Worker).
+  // El asistente había dejado un Worker "Hello world"; esto hace que sirva los archivos reales.
+  "name": "porramund",
+  "compatibility_date": "2025-01-01",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}
